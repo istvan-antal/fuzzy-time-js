@@ -1,20 +1,25 @@
 var FuzzyTime = {
+    _units: {
+        1: ['second', 'seconds'],
+        60: ['minute', 'minutes'],
+        3600: ['hour', 'hours'],
+        86400: ['day', 'days'],
+        604800: ['week', 'weeks']
+    },
+    /**
+     * Contains the breakpoint units.
+     * 
+     * @type Array
+     */
+    _lengths: [],
     format: function (diff) {
-        var breakpoints = {
-                1: ['second', 'seconds'],
-                60: ['minute', 'minutes'],
-                3600: ['hour', 'hours'],
-                86400: ['day', 'days'],
-                604800: ['week', 'weeks']
-            },
-            keys = [],
-            i,
-            prev_value = 0,
+        var keys = FuzzyTime._lengths.slice(0),
+            previousLength = 0,
             text = '',
-            value,
-            unit,
-            units;
-    
+            length,
+            unitName,
+            unitCount;
+        
         if (typeof diff !== 'number' || isNaN(diff)) {
             throw new Error('Only numbers are accepted');
         }
@@ -23,29 +28,23 @@ var FuzzyTime = {
             return 'now';
         }
         
-        for (i in breakpoints) {
-            if (breakpoints.hasOwnProperty(i)) {
-                keys.push(i);
-            }
-        }
-        
         do {
-            value = keys.pop();
-            unit = breakpoints[value];
+            length = keys.pop();
+            unitName = FuzzyTime._units[length];
             
-            units = diff;
-            if (prev_value) {
-                units %= prev_value;
+            unitCount = diff;
+            if (previousLength) {
+                unitCount %= previousLength;
             }
             
-            units /= value;
-            units = Math.floor(Math.abs(units));
+            unitCount /= length;
+            unitCount = Math.floor(Math.abs(unitCount));
             
-            if (units) {
-                text += units + ' ' + unit[(units > 1) ? 1 : 0] + ' ';
+            if (unitCount) {
+                text += unitCount + ' ' + unitName[(unitCount > 1) ? 1 : 0] + ' ';
             }
             
-            prev_value = value;
+            previousLength = length;
             
         } while (keys.length);
         
@@ -58,3 +57,29 @@ var FuzzyTime = {
         return text;
     }
 };
+
+(function () {
+    var i;
+    
+    for (i in FuzzyTime._units) {
+        if (FuzzyTime._units.hasOwnProperty(i)) {
+            FuzzyTime._lengths.push(parseInt(i, 10));
+        }
+    }
+    
+    /**
+     * Ensure that our keys array is sorted, because the JS runtime does 
+     * not guarranty the order on which the for in iterator returns the keys. 
+     */
+    FuzzyTime._lengths.sort(function (a, b) {
+        if (a > b) {
+            return 1;
+        }
+
+        if (a < b) {
+            return -1;
+        }
+
+        return 0;
+    });
+}());
