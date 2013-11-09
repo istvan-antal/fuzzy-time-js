@@ -17,4 +17,9 @@ describe("FuzzyTime", function() {
         expect(FuzzyTime.format(1)).toBe('1 second ago');
         expect(FuzzyTime.format(2)).toBe('2 seconds ago');
     });
+    
+    it("should work properly when it needs to use combined metrics", function() {
+        expect(FuzzyTime.format(60 + 1)).toBe('1 minute 1 second ago');
+        expect(FuzzyTime.format(120 + 1)).toBe('2 minutes 1 second ago');
+    });
 });
