@@ -1,5 +1,5 @@
 {
-    "name": "Fuzzy Time",
+    "name": "fuzzy-time",
     "version": "1.0.0",
     "description": "A module that converts timestamps to a human readable format",
     "dependencies": {
