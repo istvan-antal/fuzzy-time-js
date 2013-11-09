@@ -1,3 +1,15 @@
+# Introduction
+
+FuzzyTime is a module that can format timestamp differences into human readable 
+time strings.
+
+## Example
+
+```
+FuzzyTime.getFuzzyTimeString(1); //1 second ago
+FuzzyTime.getFuzzyTimeString(-10 * 60); //10 minutes before
+```
+
 # Setup
 
 Install NodeJS from http://nodejs.org/

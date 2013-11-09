@@ -119,7 +119,7 @@ var FuzzyTime = {
         }
     }
     
-    /**
+    /*
      * Ensure that our keys array is sorted, because the JS runtime does 
      * not guarranty the order on which the for in iterator returns the keys. 
      */

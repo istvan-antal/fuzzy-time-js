@@ -1,3 +1,4 @@
+/* global FuzzyTime,describe,it,expect */
 describe("FuzzyTime", function() {
     var minute = 60,
         hour = 3600,
@@ -20,6 +21,11 @@ describe("FuzzyTime", function() {
     it("should pluralize properly", function() {
         expect(FuzzyTime.getFuzzyTimeString(1)).toBe('1 second ago');
         expect(FuzzyTime.getFuzzyTimeString(2)).toBe('2 seconds ago');
+    });
+    
+    it("should work for negative values", function() {
+        expect(FuzzyTime.getFuzzyTimeString(-1)).toBe('1 second before');
+        expect(FuzzyTime.getFuzzyTimeString(-10 * 60)).toBe('10 minutes before');
     });
     
     it("should work properly when it needs to use combined metrics", function() {
