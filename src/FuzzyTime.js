@@ -12,27 +12,25 @@ var FuzzyTime = {
      * @type Array
      */
     _lengths: [],
-    format: function (diff) {
+    getUnitDistribution: function (amount) {
         var keys = FuzzyTime._lengths.slice(0),
             previousLength = 0,
-            text = '',
             length,
-            unitName,
-            unitCount;
+            unitCount,
+            result = [];
         
-        if (typeof diff !== 'number' || isNaN(diff)) {
+        if (typeof amount !== 'number' || isNaN(amount)) {
             throw new Error('Only numbers are accepted');
         }
         
-        if (diff === 0) {
-            return 'now';
+        if (amount === 0) {
+            return [];
         }
         
         do {
             length = keys.pop();
-            unitName = FuzzyTime._units[length];
             
-            unitCount = diff;
+            unitCount = amount;
             if (previousLength) {
                 unitCount %= previousLength;
             }
@@ -40,13 +38,30 @@ var FuzzyTime = {
             unitCount /= length;
             unitCount = Math.floor(Math.abs(unitCount));
             
-            if (unitCount) {
-                text += unitCount + ' ' + unitName[(unitCount > 1) ? 1 : 0] + ' ';
-            }
+            result.push({
+                length: length,
+                count: unitCount
+            });
             
             previousLength = length;
             
         } while (keys.length);
+        
+        return result;
+    },
+    format: function (diff) {
+        var text = '',
+            distribution = FuzzyTime.getUnitDistribution(diff);
+        
+        if (!distribution.length) {
+            return 'now';
+        }
+        
+        distribution.forEach(function (item) {
+            if (item.count) {
+                text += item.count + ' ' + FuzzyTime._units[item.length][(item.count > 1) ? 1 : 0] + ' ';
+            }
+        });
         
         if (diff < 0) {
             text += 'before';
