@@ -18,6 +18,10 @@ var FuzzyTime = {
             throw new Error('Only numbers are accepted');
         }
         
+        if (diff === 0) {
+            return 'now';
+        }
+        
         for (i in breakpoints) {
             if (breakpoints.hasOwnProperty(i)) {
                 keys.push(i);
