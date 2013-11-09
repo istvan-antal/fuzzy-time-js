@@ -49,11 +49,20 @@ var FuzzyTime = {
         
         return result;
     },
-    format: function (diff, options) {
+    /**
+     * Returns a fuzzy represenation of the time diff that is more human readable.
+     * 
+     * @param {Number} diff
+     * @param {?Object} options
+     * 
+     * @returns {String}
+     */
+    getFuzzyTimeString: function (diff, options) {
         var text = '',
             done = false,
             foundFirstLevel = false,
             levels,
+            units,
             distribution = FuzzyTime.getUnitDistribution(diff);
         
         if (!distribution.length) {
@@ -61,7 +70,8 @@ var FuzzyTime = {
         }
         
         options = options || {};
-        levels = options.levels || - 1;
+        levels = options.maxLevels || - 1;
+        units = options.maxUnits || - 1;
         
         distribution.forEach(function (item) {
             if (done) {
@@ -77,6 +87,14 @@ var FuzzyTime = {
                 levels -= 1;
                 
                 if (!levels || !item.count) {
+                    done = true;
+                }
+            }
+            
+            if (foundFirstLevel && item.count && units !== -1) {
+                units -= 1;
+                
+                if (!units) {
                     done = true;
                 }
             }
