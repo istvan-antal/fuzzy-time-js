@@ -22,4 +22,9 @@ describe("FuzzyTime", function() {
         expect(FuzzyTime.format(60 + 1)).toBe('1 minute 1 second ago');
         expect(FuzzyTime.format(120 + 1)).toBe('2 minutes 1 second ago');
     });
+    
+    it("should handle weeks", function() {
+        expect(FuzzyTime.format(604800 + 60 + 1)).toBe('1 week 1 minute 1 second ago');
+        expect(FuzzyTime.format(604800 + 120 + 1)).toBe('1 week 2 minutes 1 second ago');
+    });
 });

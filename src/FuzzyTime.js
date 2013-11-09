@@ -4,7 +4,8 @@ var FuzzyTime = {
                 1: ['second', 'seconds'],
                 60: ['minute', 'minutes'],
                 3600: ['hour', 'hours'],
-                86400: ['day', 'days']
+                86400: ['day', 'days'],
+                604800: ['week', 'weeks']
             },
             keys = [],
             i,
