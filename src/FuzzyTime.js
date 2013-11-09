@@ -49,17 +49,36 @@ var FuzzyTime = {
         
         return result;
     },
-    format: function (diff) {
+    format: function (diff, options) {
         var text = '',
+            done = false,
+            foundFirstLevel = false,
+            levels,
             distribution = FuzzyTime.getUnitDistribution(diff);
         
         if (!distribution.length) {
             return 'now';
         }
         
+        options = options || {};
+        levels = options.levels || - 1;
+        
         distribution.forEach(function (item) {
+            if (done) {
+                return;
+            }
+            
             if (item.count) {
                 text += item.count + ' ' + FuzzyTime._units[item.length][(item.count > 1) ? 1 : 0] + ' ';
+                foundFirstLevel = true;
+            }
+            
+            if (foundFirstLevel && levels !== -1) {
+                levels -= 1;
+                
+                if (!levels || !item.count) {
+                    done = true;
+                }
             }
         });
         

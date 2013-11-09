@@ -36,4 +36,19 @@ describe("FuzzyTime", function() {
         expect(FuzzyTime.format(week * 2 + day + hour + minute + 1)).toBe('2 weeks 1 day 1 hour 1 minute 1 second ago');
         expect(FuzzyTime.format(week * 2 + 3 * day + 8 * hour + 2 * minute + 1)).toBe('2 weeks 3 days 8 hours 2 minutes 1 second ago');
     });
+    
+    
+    it("should support limiting the levels", function() {
+        expect(FuzzyTime.format(week * 2 + day + hour + minute + 1, { levels: 5 })).toBe('2 weeks 1 day 1 hour 1 minute 1 second ago');
+        expect(FuzzyTime.format(week * 2 + 3 * day + 8 * hour + 2 * minute + 1, { levels: 5 })).toBe('2 weeks 3 days 8 hours 2 minutes 1 second ago');
+        
+        expect(FuzzyTime.format(week * 2 + day + hour + minute + 1, { levels: 2 })).toBe('2 weeks 1 day ago');
+        expect(FuzzyTime.format(week * 2 + 3 * day + 8 * hour + 2 * minute + 1, { levels: 2 })).toBe('2 weeks 3 days ago');
+        
+        expect(FuzzyTime.format(week * 2 + hour + minute + 1, { levels: 2 })).toBe('2 weeks ago');
+        expect(FuzzyTime.format(week * 2 + 8 * hour + 2 * minute + 1, { levels: 2 })).toBe('2 weeks ago');
+        
+        expect(FuzzyTime.format(week * 2 + hour + minute + 1, { levels: 3 })).toBe('2 weeks ago');
+        expect(FuzzyTime.format(week * 2 + 8 * hour + 2 * minute + 1, { levels: 3 })).toBe('2 weeks ago');
+    });
 });
