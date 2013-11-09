@@ -10,9 +10,9 @@ module.exports = function(grunt) {
         },
         jasmine: {
             lib: {
-                src: 'src/fuzzy-time.js',
+                src: 'src/*.js',
                 options: {
-                    specs: 'src/fuzzy-timeSpec.js'
+                    specs: 'tests/*Spec.js'
                 }
             }
         }
