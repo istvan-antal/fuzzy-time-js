@@ -1,12 +1,12 @@
 {
-    "name": "fuzzy-time",
-    "version": "1.0.0",
-    "description": "A module that converts timestamps to a human readable format",
-    "dependencies": {
-        "grunt": "0.4.1",
-        "grunt-contrib-jshint": "0.4.0",
-        "grunt-contrib-jasmine": "0.5.2"
-    },
-    "author": "István Miklós Antal <istvan.m.antal@gmail.com>",
-    "license": "MIT"
+  "name": "fuzzy-time",
+  "version": "1.0.0",
+  "description": "A module that converts timestamps to a human readable format",
+  "dependencies": {
+    "grunt": "0.4.1",
+    "grunt-contrib-jshint": "0.4.0",
+    "grunt-contrib-jasmine": "1.0.0"
+  },
+  "author": "István Miklós Antal <istvan.m.antal@gmail.com>",
+  "license": "MIT"
 }
